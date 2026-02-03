@@ -1,0 +1,38 @@
+# Core RL and ML libraries
+torch>=2.0.0
+numpy>=2.0.0
+
+# Gym environments
+gym>=0.26.0
+gymnasium>=1.1.0
+
+# Flight simulator for LAG mission
+JSBSim==1.1.14  # If you use newer version (1.2.0+), bugs may occur
+
+# Computer vision and visualization
+opencv-python
+matplotlib
+pillow
+
+# Scientific computing
+scipy
+pandas
+
+# Configuration and utilities
+commentjson
+PyYAML
+tqdm
+psutil
+setproctitle
+func_timeout
+
+# Networking and remote execution
+# docker
+# paramiko
+requests
+
+# Geospatial utilities (for JSBSim)
+pymap3d # ==3.1.0
+
+# Build dependencies
+Cython # ==3.1.2

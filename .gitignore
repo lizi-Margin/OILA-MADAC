@@ -1,0 +1,41 @@
+*/__pycache__
+__pycache__
+*.pyc
+
+.vscode
+.vs
+.idea
+.marscode
+.claude
+.pytest_cache
+
+# /test.py
+
+# RESULT
+/RESULT
+
+# hdb
+MISSION/hdb/core/hddf2sim/
+MISSION/hdb/core/gym_jsbsim/
+MISSION/hdb/core/sturnus/
+!MISSION/hdb/py_c3utils.pyd
+
+# lag
+MISSION/bvr_lag/JSBSim/data
+
+# emmmm
+/Quad2NGEnv_data
+/Quad2NGEnv_plot
+
+# traj
+/rm_broken_traj.sh
+.uhtk
+
+# .env
+/.env
+
+
+# bvr sim
+/log.txt
+/bvr_sim.log
+/replay*.acmi

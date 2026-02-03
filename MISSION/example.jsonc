@@ -1,0 +1,20 @@
+{
+    // config HMP core
+    "config.py->GlobalConfig": {
+        "env_name": "uhmap", // *** the selection of MISSION
+        "logdir": "./RESULT/example/",
+        "seed": 1111,
+        "num_threads": 2, 
+        "fold": 1,
+        "report_reward_interval": 5,
+        "max_n_episode": 500000
+    },
+
+    // config MISSION
+    "MISSION.example.py->ScenarioConfig": {  // *** must kiss with "env_name"
+    },
+
+    // config ALGORITHMs
+    "ALGORITHM.conc_4hist.foundation.py->AlgorithmConfig": { // must kiss with "TEAM_NAMES"
+    }
+}
