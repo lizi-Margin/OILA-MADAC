@@ -2,3 +2,15 @@
 	path = uhtk
 	url = https://github.com/lizi-Margin/uhtk
 
+[submodule "MISSION/bvr_sim/src/extern/pybind11"]
+	path = MISSION/bvr_sim/src/extern/pybind11
+	url = https://github.com/pybind/pybind11.git
+[submodule "MISSION/bvr_sim/src/extern/eigen"]
+	path = MISSION/bvr_sim/src/extern/eigen
+	url = https://gitlab.com/libeigen/eigen.git
+[submodule "MISSION/bvr_sim/src/extern/jsbsim"]
+	path = MISSION/bvr_sim/src/extern/jsbsim
+	url = https://github.com/JSBSim-Team/jsbsim.git
+[submodule "MISSION/bvr_sim/src/extern/cpptrace"]
+	path = MISSION/bvr_sim/src/extern/cpptrace
+	url = https://github.com/jeremy-rifkin/cpptrace.git
