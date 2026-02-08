@@ -1,14 +1,13 @@
 {
     // ========================================================================
-    // BVR 3D - 1v1 Training Configuration
-    // PPO with Entity-Oriented Observation Space
+    // BVR - v2 Training Configuration
     // ========================================================================
 
     // ===================== UHRL Framework Core Config =====================
     "config.py->GlobalConfig": {
         "env_name": "bvr_sim",
         "logdir": "RESULT/bvr_sim-ppo_ma-2v2-entity-denseReward",
-        "seed": 1111,
+        "seed": 2222,
         "num_threads": 32,
         "fold": 1,
         "report_reward_interval": 64,
@@ -19,7 +18,7 @@
     "MISSION.bvr_sim.env_wrapper->ScenarioConfig": {
         "AGENT_ID_EACH_TEAM": [[0, 1]],
         "TEAM_NAMES": [
-            "ALGORITHM.MADAC-reinforce.foundation->ReinforceAlgorithmFoundation" //_251206
+            "ALGORITHM.MADAC_imitation.foundation->ReinforceAlgorithmFoundation"
         ],
         "interested_team": 0,
 
@@ -32,37 +31,28 @@
         "formation_max_spread_nm": 6.0,
 
         "cpp_env_init_file": "MISSION/bvr_sim/conf_system/cpp/init/2v2.jsonc",
-        // "red_meta": {
-        //     "A01": {"model": "F16", "record": false},
-        //     "A02": {"model": "F16", "record": false}
-        // },
-        // "blue_meta": {
-        //     "B01": {"model": "F16", "record": false},
-        //     "B02": {"model": "F16", "record": false}
-        // },
 
         "reward_config" :{
             // Dense rewards
-            "engage_enemy_weight": 0.01,         // Reward for closing rate
-            "enemy_tracking_weight": 0.001,     // radar tracking reward
-            "enemy_distance_weight": 0.01,       // Reward for closing distance to enemy
-            "altitude_advantage_weight": 0.001,  // 3D-specific: altitude advantage
-            "safe_altitude_weight": 0.002,        // 3D-specific: stay in safe altitude
-            "missile_evasion_weight": 0.1,     // Reward for evading missiles
-            "speed_weight": 0.01,             // Reward for maintaining speed
+            "engage_enemy_weight": 0.00,         // Reward for closing rate
+            "enemy_distance_weight": 0.0,       // Reward for closing distance to enemy
+            "enemy_tracking_weight": 0.01,     // radar tracking reward
+            "altitude_advantage_weight": 0.002,  // 3D-specific: altitude advantage
+            "safe_altitude_weight": 0.000,        // 3D-specific: stay in safe altitude
+            "missile_evasion_weight": 0.05,     // Reward for evading missiles 
+            "speed_weight": 0.00,             // Reward for maintaining speed
             "target_speed": 450.0,              // 3D: lower target speed
-            "survival_weight": 0.01,            // Reward for staying alive
-            // TODO 导弹开机奖励
+            "survival_weight": 0.0,            // Reward for staying alive
 
             // Sparse rewards
-            "missile_launch_weight": 0.0,       // Reward for launching missiles
-            "missile_launch_reward": 6.0,
+            "missile_launch_weight": 0.1,       // Reward for launching missiles
+            "missile_launch_reward": 5.0,
             "missile_duplicated_launch_penalty": -5.0,
-            "missile_result_weight": 0.0,      // Reward for hits, penalty for misses
+            "missile_result_weight": 0.1,      // Reward for hits, penalty for misses
             "missile_hit_reward": 100.0,
             "missile_miss_penalty": -5.0,
-            "win_loss_weight": 0.0,             // Episode outcome
-            "win_reward": 80.0,
+            "win_loss_weight": 0.3,             // Episode outcome
+            "win_reward": 100.0,
             "loss_penalty": -80.0,
 
             // Altitude parameters
@@ -84,9 +74,9 @@
     },
 
     // --- config ALGORITHM 1/2 ---
-    "ALGORITHM.MADAC-reinforce.foundation->AlgorithmConfig": { //
+    "ALGORITHM.MADAC_imitation.foundation->AlgorithmConfig": { //
         "train_traj_needed": 64,
-        //"use_bc_update_actor": true,
+        "use_bc_update_actor": true,
         "use_normalization": true,
         "load_checkpoint": false,
         "gamma": 0.99,

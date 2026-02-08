@@ -1,7 +1,6 @@
 {
     // ========================================================================
-    // BVR 3D - 1v1 Training Configuration
-    // PPO with Entity-Oriented Observation Space
+    // BVR - v2 Training Configuration
     // ========================================================================
 
     // ===================== UHRL Framework Core Config =====================
@@ -19,7 +18,7 @@
     "MISSION.bvr_sim.env_wrapper->ScenarioConfig": {
         "AGENT_ID_EACH_TEAM": [[0, 1]],
         "TEAM_NAMES": [
-            "ALGORITHM.MADAC-reinforce.foundation->ReinforceAlgorithmFoundation" //_251206
+            "ALGORITHM.MADAC_reinforce.foundation->ReinforceAlgorithmFoundation"
         ],
         "interested_team": 0,
 
@@ -32,14 +31,6 @@
         "formation_max_spread_nm": 6.0,
 
         "cpp_env_init_file": "MISSION/bvr_sim/conf_system/cpp/init/2v2.jsonc",
-        // "red_meta": {
-        //     "A01": {"model": "F16", "record": false},
-        //     "A02": {"model": "F16", "record": false}
-        // },
-        // "blue_meta": {
-        //     "B01": {"model": "F16", "record": false},
-        //     "B02": {"model": "F16", "record": false}
-        // },
 
         "reward_config" :{
             // Dense rewards
@@ -48,11 +39,10 @@
             "enemy_tracking_weight": 0.01,     // radar tracking reward
             "altitude_advantage_weight": 0.002,  // 3D-specific: altitude advantage
             "safe_altitude_weight": 0.000,        // 3D-specific: stay in safe altitude
-            "missile_evasion_weight": 0.05,     // Reward for evading missiles  本来是0.05
+            "missile_evasion_weight": 0.05,     // Reward for evading missiles 
             "speed_weight": 0.00,             // Reward for maintaining speed
             "target_speed": 450.0,              // 3D: lower target speed
             "survival_weight": 0.0,            // Reward for staying alive
-            // TODO 导弹开机奖励
 
             // Sparse rewards
             "missile_launch_weight": 0.1,       // Reward for launching missiles
@@ -84,9 +74,9 @@
     },
 
     // --- config ALGORITHM 1/2 ---
-    "ALGORITHM.MADAC-reinforce.foundation->AlgorithmConfig": { //
+    "ALGORITHM.MADAC_reinforce.foundation->AlgorithmConfig": { //
         "train_traj_needed": 64,
-        //"use_bc_update_actor": true,
+        "use_bc_update_actor": false,
         "use_normalization": true,
         "load_checkpoint": false,
         "gamma": 0.99,
