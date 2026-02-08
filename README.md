@@ -57,19 +57,35 @@ python main.py --cfg MISSION/bvr_sim/conf_system/cpp/MADAC_reinforce-2v2-entity-
 ## Project Structure
 
 ```
-MISSION/bvr_sim/
-├── env_wrapper.py          # UHRL wrapper
-├── bvr_env.py              # Pure Python environment
-├── bvr_env_cpp.py          # C++ wrapper
-├── build_windows.bat       # Windows build script
-├── build_linux.sh          # Linux build script
-└── conf_system/
-    ├── cpp/                # C++ environment configs
-    └── python/             # Python-only configs
-ALGORITHM/
-├── MADAC_imitation/        # Online imitation learning
-├── MADAC_reinforce/        # MADAC PPO training
-└── random/                 # Random baseline
+OILA-MADAC/
+├── MISSION/bvr_sim/          # BVR air combat environment
+│   ├── env_wrapper.py        # UHRL wrapper
+│   ├── bvr_env.py            # Pure Python environment
+│   ├── bvr_env_cpp.py        # C++ wrapper
+│   ├── build_windows.bat     # Windows build script
+│   ├── build_linux.sh        # Linux build script
+│   └── conf_system/          # Configuration files
+│       ├── cpp/              # C++ environment configs
+│       └── python/           # Python-only configs
+│
+├── ALGORITHM/                # RL algorithms
+│   ├── MADAC_imitation/     # Online imitation learning
+│   ├── MADAC_reinforce/     # MADAC PPO training
+│   └── random/              # Random baseline
+│
+├── COMMUNICATION/            # Inter-process communication
+│   └── shm_pool.py          # Shared memory process pool
+│
+└── RESULT/                   # Training outputs (auto-created per experiment)
+    ├── config_backup.jsonc   # Configuration backup
+    ├── mx_info.json          # Experiment metadata
+    ├── model.pt              # Trained model weights
+    ├── rec.csv/json          # Training records
+    ├── rec.jpeg/jpg          # Visualization snapshots
+    ├── history_cpt/          # Model checkpoints
+    ├── acmi_recordings/      # ACMI flight recordings
+    ├── mcom/                 # Communication logs
+    └── reward_plot_path/     # Reward curve plots
 ```
 
 ## Citation
