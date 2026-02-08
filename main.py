@@ -43,11 +43,7 @@ if __name__ == '__main__':
         print("RUN")
         runner.run()
     else: # run il_runner
-        main_thread_import_torch()
-        init_conf_system(prepare_logdir=True, print_summary=True)
-        from il_runner import Runner
-        runner = Runner()
-        runner.run()
+        assert False, "IL system is not supported in this version"
 
 elif platform.system()!="Linux":
     # Linux uses fork for multi-processing, but Windows does not, reload config for Windows
