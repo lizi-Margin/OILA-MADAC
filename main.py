@@ -43,7 +43,7 @@ if __name__ == '__main__':
         print("RUN")
         runner.run()
     else: # run il_runner
-        assert False, "IL system is not supported in this version"
+        assert False, "Offline IL system is not supported in this version"
 
 elif platform.system()!="Linux":
     # Linux uses fork for multi-processing, but Windows does not, reload config for Windows
