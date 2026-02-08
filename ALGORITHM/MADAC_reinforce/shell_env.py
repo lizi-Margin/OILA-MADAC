@@ -45,7 +45,7 @@ class ShellEnvWrapper(object):
             avail_act = np.array([info['Avail-Act'] for info in np.array(State_Recall['Latest-Info'][~ENV_PAUSE], dtype=object)])
             I_State_Recall.update({'Avail-Act':avail_act})
         else:
-            raise NotImplementedError("Go modify the ppo_sampler, remove avail_act from the req_dict")
+            raise NotImplementedError("Go modify the madac_sampler, remove avail_act from the req_dict")
 
         act_active, internal_recall = self.RL_functional.interact_with_env_genuine(I_State_Recall)
 

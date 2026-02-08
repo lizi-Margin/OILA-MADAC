@@ -28,7 +28,7 @@ class AlgorithmConfig:
 
     # PPO part
     clip_param = 0.15
-    ppo_epoch = 16
+    epoch = 16
     n_pieces_batch_division = 1
     value_loss_coef = 0.1
     entropy_coef = 0.05
@@ -113,9 +113,9 @@ class ReinforceAlgorithmFoundation(RLAlgorithmBase):
         print(5)
 
         # initialize optimizer and trajectory (batch) manager
-        from .ppo import PPO
+        from .madac import MADAC
         from .trajectory import BatchTrajManager
-        self.trainer = PPO(self.policy, ppo_config=AlgorithmConfig, mcv=mcv)
+        self.trainer = MADAC(self.policy, config=AlgorithmConfig, mcv=mcv)
         print(6)
         self.traj_manager = BatchTrajManager(
             n_env=n_thread, traj_limit=int(GlobalConfig.ScenarioConfig.MaxEpisodeStep),

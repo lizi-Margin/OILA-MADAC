@@ -1,9 +1,0 @@
-- `foundation.py`: Connects the algorithm to runners, sets hyperparameters, instantiates the policy network, manages checkpoints, and coordinates training hooks.
-- `shell_env.py`: Bridges framework state into the learner by reshaping observations, applying NaN masks, and attaching callbacks before returning actions.
-- `net.py`: Default recurrent attention-based actor-critic that supports entity-aware vector and image observations.
-- `net2.py`: Alternative network with residual MLP blocks and clamped activations for stability-focused experiments.
-- `net3.py`: Streamlined feed-forward/gru hybrid designed for faster inference with lighter attention usage.
-- `net4.py`: Experimental transformer-style model exploring multi-head attention token mixers.
-- `ppo.py`: Core PPO update loop handling minibatch optimisation, gradient checks, and metric logging.
-- `ppo_sampler.py`: Pads trajectory batches, builds masks for sequence-aware training, and normalises advantages.
-- `trajectory.py`: Trajectory container that pushes rewards forward, applies GAE, and records sequence lengths for the sampler.

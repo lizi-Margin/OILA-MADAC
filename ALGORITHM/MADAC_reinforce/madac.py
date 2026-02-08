@@ -7,22 +7,22 @@ from torch.utils.data.sampler import BatchSampler, SubsetRandomSampler
 from uhtk.UTIL.colorful import *
 from uhtk.UTIL.tensor_ops import _2tensor, __hash__, __hashn__
 from config import GlobalConfig as cfg
-from .ppo_sampler import TrajPoolSampler
+from .madac_sampler import TrajPoolSampler
 from uhtk.mcv_log_manager import LogManager
 
 class PPO():
-    def __init__(self, policy_and_critic, ppo_config, mcv=None):
+    def __init__(self, policy_and_critic, config, mcv=None):
         self.policy_and_critic = policy_and_critic
-        self.clip_param = ppo_config.clip_param
-        self.ppo_epoch = ppo_config.ppo_epoch
-        self.n_pieces_batch_division = ppo_config.n_pieces_batch_division
-        self.value_loss_coef = ppo_config.value_loss_coef
-        self.entropy_coef = ppo_config.entropy_coef
-        self.max_grad_norm = ppo_config.max_grad_norm
-        self.add_prob_loss = ppo_config.add_prob_loss
-        self.prevent_batchsize_oom = ppo_config.prevent_batchsize_oom
-        # self.freeze_body = ppo_config.freeze_body
-        self.lr = ppo_config.lr
+        self.clip_param = config.clip_param
+        self.epoch = config.epoch
+        self.n_pieces_batch_division = config.n_pieces_batch_division
+        self.value_loss_coef = config.value_loss_coef
+        self.entropy_coef = config.entropy_coef
+        self.max_grad_norm = config.max_grad_norm
+        self.add_prob_loss = config.add_prob_loss
+        self.prevent_batchsize_oom = config.prevent_batchsize_oom
+        # self.freeze_body = config.freeze_body
+        self.lr = config.lr
         self.all_parameter = list(policy_and_critic.named_parameters())
 
         # if not self.freeze_body:
@@ -33,11 +33,11 @@ class PPO():
         self.g_initial_value_loss = 0
         
         # 轮流训练式
-        self.log_manager = LogManager(mcv=mcv, who='ppo.py')
-        self.ppo_update_cnt = 0
+        self.log_manager = LogManager(mcv=mcv, who='madac.py')
+        self.update_cnt = 0
         self.batch_size_reminder = True
 
-        if ppo_config.use_fp16:
+        if config.use_fp16:
             tv = str(torch.__version__)
             if '+' in tv:
                 tv = tv.split('+')[0]
@@ -73,11 +73,11 @@ class PPO():
 
     def train_on_traj_(self, traj_pool, task):
 
-        ppo_valid_percent_list = []
+        valid_percent_list = []
         from .foundation import AlgorithmConfig
         sampler = TrajPoolSampler(n_div=1, traj_pool=traj_pool, flag=task, prevent_batchsize_oom=self.prevent_batchsize_oom, mcv=self.log_manager.mcv)
         # before_training_hash = [__hashn__(t.parameters()) for t in (self.policy_and_critic._nets_flat_placeholder_)]
-        for e in range(self.ppo_epoch):
+        for e in range(self.epoch):
             sample_iter = sampler.reset_and_get_iter()
             self.optimizer.zero_grad()
             # ! get traj fragment
@@ -97,7 +97,7 @@ class PPO():
             else:
                 loss_final.backward()
             # log
-            ppo_valid_percent_list.append(others.pop('PPO valid percent').item())
+            valid_percent_list.append(others.pop('PPO valid percent').item())
             self.log_manager.log_trivial(dictionary=others); others = None
 
             # Check for NaN in gradients before clipping
@@ -127,17 +127,17 @@ class PPO():
                     raise RuntimeError(f'NaN weights detected in {name}. Training cannot continue. Please reload from checkpoint.')
 
             
-            if ppo_valid_percent_list[-1] < 0.45: 
+            if valid_percent_list[-1] < 0.45: 
                 print亮黄('policy change too much, epoch terminate early'); break 
         pass # finish all epoch update
 
-        print亮黄(np.array(ppo_valid_percent_list))
+        print亮黄(np.array(valid_percent_list))
         self.log_manager.log_trivial_finalize()
 
-        self.ppo_update_cnt += 1
+        self.update_cnt += 1
                 
         
-        return self.ppo_update_cnt
+        return self.update_cnt
 
     def freeze_body(self):
         assert False, "function forbidden"
@@ -197,7 +197,7 @@ class PPO():
         if not self.add_prob_loss:
             probs_loss = torch.zeros_like(probs_loss)
 
-        # dual clip ppo core
+
         # RuntimeError: The size of tensor a (423) must match the size of tensor b (2) at non-singleton dimension 1
         # see _get_act_log_probs
         E = newPi_actionLogProb - oldPi_actionLogProb
@@ -218,9 +218,9 @@ class PPO():
 
         #######################################################################
         clipped_mask = (torch.abs(ratio - ratio_clipped) > 1e-6).float() * mask_expanded
-        ppo_valid_percent = 1.0 - clipped_mask.sum() / valid_steps
+        valid_percent = 1.0 - clipped_mask.sum() / valid_steps
         #######################################################################
-        # ppo_valid_percent = ((E_clip == E).int().sum()/batch_agent_size)
+        # valid_percent = ((E_clip == E).int().sum()/batch_agent_size)
         #######################################################################
 
         #######################################################################
@@ -236,7 +236,7 @@ class PPO():
 
         others = {
             'Value loss Abs':           value_loss_abs,
-            'PPO valid percent':        ppo_valid_percent,
+            'valid percent':        valid_percent,
             'AT_net_loss':              AT_net_loss,
             'Policy loss':              policy_loss,
             'Entropy loss':             entropy_loss,

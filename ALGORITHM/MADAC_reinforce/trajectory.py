@@ -292,7 +292,6 @@ class BatchTrajManager(TrajManagerBase):
         else:
             self.traj_pool = []
         # self.update_cnt += 1
-        # assert ppo_update_cnt == self.update_cnt
         return self.update_cnt
 
         
@@ -301,14 +300,13 @@ class BatchTrajManager(TrajManagerBase):
 
         current_task_l, self.traj_pool = self.pool_manager.absorb_finalize_pool(pool=self.traj_pool)
         for current_task in current_task_l:
-            ppo_update_cnt = self.trainer_hook(self.traj_pool, current_task)
+            update_cnt = self.trainer_hook(self.traj_pool, current_task)
 
         if self._save_traj_enabled:
             self.save_traj(finalize=False)
         else:
             self.traj_pool = []
         self.update_cnt += 1
-        # assert ppo_update_cnt == self.update_cnt
         return self.update_cnt
 
     def can_exec_training(self):

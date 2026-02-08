@@ -6,7 +6,7 @@
     // ===================== UHRL Framework Core Config =====================
     "config.py->GlobalConfig": {
         "env_name": "bvr_sim",
-        "logdir": "RESULT/bvr_sim-ppo_ma-2v2-entity-denseReward",
+        "logdir": "RESULT/bvr_sim-MADAC_reinforce-2v2-entity-denseReward",
         "seed": 2222,
         "num_threads": 32,
         "fold": 1,
@@ -82,7 +82,7 @@
         "gamma": 0.99,
         "lr": 3e-4,
         "entropy_coef": 0.0001,
-        "ppo_epoch": 16,
+        "epoch": 16,
         "net_hdim": 128,
         "entity_emb_dim": 16,
 
