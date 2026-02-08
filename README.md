@@ -1,6 +1,6 @@
 # OILA-MADAC
 
-Online Imitation learning Augmented Multi-Actor-Double-Attention-Critic for cooperative BVR air combat.
+Online Imitation Learning Augmented Multi-Actor-Double-Attention-Critic algorithm for Multi-UAV Cooperative Beyond-Visual-Range Air Combat Decision-Making.
 
 ## Overview
 
@@ -8,6 +8,8 @@ Online Imitation learning Augmented Multi-Actor-Double-Attention-Critic for coop
 - **Environment**: High-fidelity 2v2 BVR air combat simulator (6-DOF aircraft, AAM guidance, radar/Datalink)
 
 ## Installation
+
+**Python Version**: Recommended 3.8 - 3.13
 
 ```bash
 git clone --recurse-submodules https://github.com/lizi-Margin/OILA-MADAC.git
@@ -73,9 +75,10 @@ ALGORITHM/
 ## Citation
 
 ```bibtex
-@misc{ouilamadac2024,
-  title={OILA-MADAC: Online Imitation learning Augmented Multi-Actor-Double-Attention-Critic},
-  author={},
+@article{ouilamadac2026,
+  title={Online Imitation Learning Augmented Multi-Actor-Double-Attention-Critic algorithm for Multi-UAV Cooperative Beyond-Visual-Range Air Combat Decision-Making},
+  author={Tan, Mulai and Sun, Haocheng and Ding, Dali and Sun, Chong},
+  journal={},
   year={2026}
 }
 ```
